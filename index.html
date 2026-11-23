@@ -308,7 +308,7 @@ textarea.inp{min-height:130px;resize:vertical;line-height:1.5}
 .case .tilt{order:-1}
 .shot{width:280px}
 .foot-grid{grid-template-columns:1fr 1fr !important}
-.badge{transform:scale(.72);transform-origin:bottom left}
+.badge{transform:scale(.72);transform-origin:bottom right}
 .meta{grid-template-columns:1fr 1fr}
 .meta > div:nth-child(3){padding-left:0;border-left:0}
 .sec{grid-template-columns:1fr;gap:24px}
@@ -403,6 +403,38 @@ textarea.inp{min-height:130px;resize:vertical;line-height:1.5}
 .story{height:270px}
 }
 
+/* form success animation */
+.form-done{position:relative;overflow:hidden}
+.sent .form-done{animation:fade .5s cubic-bezier(.22,1,.36,1) both}
+.okmark{position:relative;width:84px;height:84px}
+.okmark svg{position:absolute;inset:0}
+.okmark .ring{stroke-dasharray:252;stroke-dashoffset:252}
+.okmark .tick{stroke-dasharray:60;stroke-dashoffset:60}
+.sent .okmark .ring{animation:draw .8s cubic-bezier(.65,0,.35,1) .15s forwards}
+.sent .okmark .tick{animation:draw .45s cubic-bezier(.65,0,.35,1) .85s forwards}
+.okmark .fillc{transform:scale(0);transform-origin:center;transform-box:fill-box}
+.sent .okmark .fillc{animation:popc .5s cubic-bezier(.34,1.56,.64,1) .7s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes popc{to{transform:scale(1)}}
+.burst{position:absolute;left:42px;top:42px;width:0;height:0}
+.burst i{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--lime);opacity:0}
+.burst i:nth-child(even){background:var(--accent);width:6px;height:6px}
+.sent .burst i{animation:burst .9s cubic-bezier(.22,1,.36,1) .8s forwards}
+@keyframes burst{0%{opacity:1;transform:rotate(var(--a)) translateX(0) scale(1)}100%{opacity:0;transform:rotate(var(--a)) translateX(70px) scale(.4)}}
+.plane{position:absolute;right:10px;top:30px;opacity:0;color:var(--accent)}
+.sent .plane{animation:fly 1.6s cubic-bezier(.45,0,.2,1) .2s forwards}
+@keyframes fly{0%{opacity:0;transform:translate(-220px,140px) rotate(-12deg) scale(.6)}20%{opacity:1}80%{opacity:1}100%{opacity:0;transform:translate(60px,-80px) rotate(8deg) scale(1)}}
+.sent .done-t{animation:fade .6s cubic-bezier(.22,1,.36,1) 1s both}
+.sent .done-p{animation:fade .6s cubic-bezier(.22,1,.36,1) 1.12s both}
+.sent .done-b{animation:fade .6s cubic-bezier(.22,1,.36,1) 1.24s both}
+.sending .send-label:after{content:"";display:inline-block;width:14px;height:14px;margin-left:10px;vertical-align:-2px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+
+.tool-chip{background:var(--surface);border-color:transparent;font-weight:600;color:var(--ink)}
+.chip{transition:background-color .3s ease,color .3s ease,border-color .3s ease}
+.chip:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+@media (max-width:900px){.skills-row{grid-template-columns:1fr !important;gap:16px !important}}
+
 </style>
 </head>
 <body>
@@ -435,18 +467,18 @@ textarea.inp{min-height:130px;resize:vertical;line-height:1.5}
 <main><section id="top" class="hero" style="position: relative; padding: 76px 0 104px">
 <div class="wrap hero-grid" style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center">
 <div>
-<p class="lbl fade" style="margin: 0 0 18px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 10px 16px"><span>Product Designer</span><span aria-hidden="true">·</span><span>UI/UX</span><span aria-hidden="true">·</span><span>7+ years</span></p>
+<p class="lbl fade" style="margin: 0 0 18px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 10px 16px"><span>Product Designer</span><span aria-hidden="true">·</span><span>UI/UX Designer</span></p>
 <h1 class="disp" style="margin: 0; font-size: clamp(42px, 4.5vw, 68px); line-height: 1.02">
 <span class="line"><span>I design products</span></span>
 <span class="line l2" style="overflow: visible"><span>that feel <span class="sel"><span class="wr" aria-live="off"><span class="on">obvious.</span><span aria-hidden="true">clear.</span><span aria-hidden="true">intuitive.</span><span aria-hidden="true">simple.</span></span><span class="h h1"></span><span class="h h2"></span><span class="h h3"></span><span class="h h4"></span><span class="tag code" aria-hidden="true">Frame · Hug × Hug</span></span></span></span>
 </h1>
-<div style="max-width: 540px; margin-top: 52px">
+<div style="max-width: 540px; margin-top: 42px">
 <p class="fade d2" style="margin: 0; font-size: 19px; line-height: 1.6; color: var(--ink2)">7+ years turning messy requirements into clean, usable products — SaaS dashboards, mobile apps and marketing sites for teams in hiring, fintech, retail and tech services.</p>
 <p class="fade d3" style="margin: 22px 0 0; display: flex; width: 100%; align-items: center; gap: 12px; padding: 10px 16px 10px 10px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line2); font-size: 14px; line-height: 1.45; color: var(--ink2)">
 <span style="display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; background: var(--ink); flex: none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9F27A" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" style="animation: spin 8s linear infinite"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"></path></svg></span>
-<span><strong style="color: var(--ink)">AI-augmented workflow</strong> — Claude helps me research, explore and prototype faster.</span>
+<span><strong style="color: var(--ink)">AI-augmented workflow</strong> — Claude helps me map flows and explore ideas faster.</span>
 </p>
-<div class="fade d3" style="display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 24px"><span class="std"><span style="display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--tint); color: var(--accent)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"></path></svg></span>8pt spacing grid</span><span class="std"><span style="display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--tint); color: var(--accent)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"></path></svg></span>WCAG AA contrast</span><span class="std"><span style="display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--tint); color: var(--accent)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"></path></svg></span>Dev-ready handoff</span></div>
+<div class="fade d3" style="display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 24px"><span class="std"><span style="display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--tint); color: var(--accent)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"></path></svg></span>Pixel-perfect UI</span><span class="std"><span style="display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--tint); color: var(--accent)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"></path></svg></span>Scalable design systems</span><span class="std"><span style="display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--tint); color: var(--accent)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"></path></svg></span>Dev-ready handoff</span></div>
 </div>
 <div class="fade d4" style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px">
 <a class="btn btn-dark mag" href="#work">See selected work <span class="arrow" aria-hidden="true">→</span></a>
@@ -500,7 +532,7 @@ textarea.inp{min-height:130px;resize:vertical;line-height:1.5}
 </div>
 </div>
 </div>
-<div class="layer" style="--d: 26; position: absolute; left: -40px; bottom: -52px">
+<div class="layer" style="--d: 26; position: absolute; right: -52px; bottom: -58px">
 <div class="badge fade d4">
 <svg class="ring" viewBox="0 0 118 118" aria-hidden="true"><defs><path id="circ" d="M59,59 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0"></path></defs><text font-family="Inter, sans-serif" font-weight="600" font-size="10" fill="#EDEFE9"><textPath href="#circ" textLength="276" lengthAdjust="spacing">OPEN TO WORK • PRODUCT DESIGNER • </textPath></text></svg>
 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C9F27A" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg>
@@ -645,15 +677,15 @@ textarea.inp{min-height:130px;resize:vertical;line-height:1.5}
 </div>
 </section>
 <section id="about" style="background: var(--surface); padding: 140px 0; border-radius: 40px">
-<div class="wrap" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 72px">
-<div>
+<div class="wrap" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 72px; align-items: stretch">
+<div style="display: flex; flex-direction: column">
 <div class="rv">
 <p class="lbl" style="margin: 0 0 16px; color: var(--accent)">04 — About</p>
 <h2 class="disp" style="margin: 0 0 28px; font-size: clamp(36px, 4.4vw, 60px); line-height: 1.02">Designer from Pakistan, building for teams everywhere.</h2>
 <p style="margin: 0; font-size: 18px; line-height: 1.65; color: var(--ink2)">I’m Khurram — a product and UI/UX designer who has worked across agencies, in-house product teams and freelance clients on Upwork. I specialize in data-dense SaaS dashboards, web apps and mobile products, and I care about the details that make software feel easy: hierarchy, spacing, states and the handoff.</p>
 </div>
-<div class="rv" style="--i: 1; display: flex; flex-wrap: wrap; gap: 12px; margin: 30px 0 36px"><span class="stk" style="--r: -4deg; background: var(--lime); color: var(--dark)">Pixel-perfect</span><span class="stk" style="--r: 3deg; background: var(--surface); color: var(--ink)">Systems thinker</span><span class="stk" style="--r: -2deg; background: var(--accent); color: #fff">Dashboard nerd</span><span class="stk" style="--r: 4deg; background: var(--ink); color: var(--lime)">Ships with devs</span><span class="stk" style="--r: -3deg; background: var(--tint); color: var(--accent2)">AI-fluent</span></div>
-<div class="ai rv" style="--i: 2">
+<div class="rv" style="--i: 1; display: flex; flex-wrap: wrap; gap: 12px; margin: 30px 0 36px"><span class="stk" style="--r: -4deg; background: var(--lime); color: var(--dark)">Pixel-perfect</span><span class="stk" style="--r: 3deg; background: var(--surface); color: var(--ink)">Systems thinker</span><span class="stk" style="--r: -2deg; background: var(--accent); color: #fff">Data-dense UI</span><span class="stk" style="--r: 4deg; background: var(--ink); color: var(--lime)">Ships with devs</span><span class="stk" style="--r: -3deg; background: var(--tint); color: var(--accent2)">AI-assisted workflow</span></div>
+<div class="ai rv" style="--i: 2; flex: 1; display: flex; flex-direction: column">
 <span class="orb" aria-hidden="true"></span><span class="orb2" aria-hidden="true"></span>
 <p class="lbl" style="margin: 0 0 6px; color: var(--lime); position: relative">How I use AI · Claude</p>
 <h3 class="disp" style="margin: 0 0 18px; font-size: 30px; line-height: 1.1; color: #EDEFE9; position: relative">AI helps me start.<br>Figma is where I design.</h3>
@@ -690,18 +722,22 @@ textarea.inp{min-height:130px;resize:vertical;line-height:1.5}
 </div>
 <p style="margin: 16px 0 0; font-size: 13px; color: #aab6af; position: relative">AI speeds up the start. Design decisions and the Figma work are mine.</p>
 </div>
-<div class="rv" style="--i: 3; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px">
-<span class="chip">Figma</span><span class="chip">Framer</span><span class="chip">Claude (AI)</span><span class="chip">Photoshop</span><span class="chip">Sketch</span><span class="chip">Design systems</span><span class="chip">Prototyping</span>
+
 </div>
-</div>
-<div>
+<div style="display: flex; flex-direction: column">
 <div class="rv" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 44px">
 <div class="stat"><span class="lbl" style="color: var(--muted)">Designing since</span><span class="disp" style="font-size: 44px; line-height: 1">2016</span></div>
 <div class="stat"><span class="lbl" style="color: var(--muted)">Teams &amp; studios</span><span class="disp" style="font-size: 44px; line-height: 1">6</span></div>
 <div class="stat"><span class="lbl" style="color: var(--muted)">Platforms</span><span class="disp" style="font-size: 22px; line-height: 1.15">Web · Mobile · SaaS</span></div>
 </div>
 <p class="lbl rv" style="margin: 0 0 8px; color: var(--muted)">Experience</p>
-<div class="tl rv" style="--i: 1"><div class="tli now"><div><div style="font-weight: 600; font-size: 18px">Uptime</div><div style="color: var(--muted); margin-top: 3px; font-size: 15px">Product Design · UI/UX · Design Systems</div><div style="color: var(--ink2); margin-top: 6px; font-size: 15px; line-height: 1.5">End-to-end dashboard UX for a trucking recruitment platform, plus a responsive design system.</div></div><span class="lbl" style="color: var(--muted); white-space: nowrap; padding-top: 4px">2025–2026</span></div><div class="tli "><div><div style="font-weight: 600; font-size: 18px">Prixite</div><div style="color: var(--muted); margin-top: 3px; font-size: 15px">UI/UX Designer</div><div style="color: var(--ink2); margin-top: 6px; font-size: 15px; line-height: 1.5">Interfaces and responsive web layouts for client products; revamped the company’s own website.</div></div><span class="lbl" style="color: var(--muted); white-space: nowrap; padding-top: 4px">2024–2025</span></div><div class="tli "><div><div style="font-weight: 600; font-size: 18px">Xstate</div><div style="color: var(--muted); margin-top: 3px; font-size: 15px">UI/UX Designer</div><div style="color: var(--ink2); margin-top: 6px; font-size: 15px; line-height: 1.5">Scalable UI patterns across web and mobile, and standardized developer handoff.</div></div><span class="lbl" style="color: var(--muted); white-space: nowrap; padding-top: 4px">2021–2023</span></div><div class="tli "><div><div style="font-weight: 600; font-size: 18px">Ochobase</div><div style="color: var(--muted); margin-top: 3px; font-size: 15px">UI/UX Designer</div><div style="color: var(--ink2); margin-top: 6px; font-size: 15px; line-height: 1.5">Web and mobile interfaces, consistent visual styles and brand assets.</div></div><span class="lbl" style="color: var(--muted); white-space: nowrap; padding-top: 4px">2019–2020</span></div><div class="tli "><div><div style="font-weight: 600; font-size: 18px">Umda Design Agency</div><div style="color: var(--muted); margin-top: 3px; font-size: 15px">Visual Designer</div><div style="color: var(--ink2); margin-top: 6px; font-size: 15px; line-height: 1.5">Visual styles, icons and illustrations; contributed to a product design system.</div></div><span class="lbl" style="color: var(--muted); white-space: nowrap; padding-top: 4px">2016–2017</span></div><div class="tli "><div><div style="font-weight: 600; font-size: 18px">Freelance · Upwork</div><div style="color: var(--muted); margin-top: 3px; font-size: 15px">Product &amp; web design</div><div style="color: var(--ink2); margin-top: 6px; font-size: 15px; line-height: 1.5">Apps and websites for international clients, from Chaze to OZ Motor Trim.</div></div><span class="lbl" style="color: var(--muted); white-space: nowrap; padding-top: 4px">Ongoing</span></div></div>
+<div class="tl rv" style="--i: 1; flex: 1; display: flex; flex-direction: column; justify-content: space-between"><div class="tli now"><div><div style="font-weight: 600; font-size: 18px">Uptime</div><div style="color: var(--muted); margin-top: 3px; font-size: 15px">Product Design · UI/UX · Design Systems</div><div style="color: var(--ink2); margin-top: 6px; font-size: 15px; line-height: 1.5">End-to-end dashboard UX for a trucking recruitment platform, plus a responsive design system.</div></div><span class="lbl" style="color: var(--muted); white-space: nowrap; padding-top: 4px">2025–2026</span></div><div class="tli "><div><div style="font-weight: 600; font-size: 18px">Prixite</div><div style="color: var(--muted); margin-top: 3px; font-size: 15px">UI/UX Designer</div><div style="color: var(--ink2); margin-top: 6px; font-size: 15px; line-height: 1.5">Interfaces and responsive web layouts for client products; revamped the company’s own website.</div></div><span class="lbl" style="color: var(--muted); white-space: nowrap; padding-top: 4px">2024–2025</span></div><div class="tli "><div><div style="font-weight: 600; font-size: 18px">Xstate</div><div style="color: var(--muted); margin-top: 3px; font-size: 15px">UI/UX Designer</div><div style="color: var(--ink2); margin-top: 6px; font-size: 15px; line-height: 1.5">Scalable UI patterns across web and mobile, and standardized developer handoff.</div></div><span class="lbl" style="color: var(--muted); white-space: nowrap; padding-top: 4px">2021–2023</span></div><div class="tli "><div><div style="font-weight: 600; font-size: 18px">Ochobase</div><div style="color: var(--muted); margin-top: 3px; font-size: 15px">UI/UX Designer</div><div style="color: var(--ink2); margin-top: 6px; font-size: 15px; line-height: 1.5">Web and mobile interfaces, consistent visual styles and brand assets.</div></div><span class="lbl" style="color: var(--muted); white-space: nowrap; padding-top: 4px">2019–2020</span></div><div class="tli "><div><div style="font-weight: 600; font-size: 18px">Umda Design Agency</div><div style="color: var(--muted); margin-top: 3px; font-size: 15px">Visual Designer</div><div style="color: var(--ink2); margin-top: 6px; font-size: 15px; line-height: 1.5">Visual styles, icons and illustrations; contributed to a product design system.</div></div><span class="lbl" style="color: var(--muted); white-space: nowrap; padding-top: 4px">2016–2017</span></div><div class="tli "><div><div style="font-weight: 600; font-size: 18px">Freelance · Upwork</div><div style="color: var(--muted); margin-top: 3px; font-size: 15px">Product &amp; web design</div><div style="color: var(--ink2); margin-top: 6px; font-size: 15px; line-height: 1.5">Apps and websites for international clients, from Chaze to OZ Motor Trim.</div></div><span class="lbl" style="color: var(--muted); white-space: nowrap; padding-top: 4px">Ongoing</span></div></div>
+</div>
+</div>
+<div class="wrap rv" style="margin-top: 56px">
+<div style="display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 32px; align-items: center; border-radius: 24px; background: var(--soft); padding: 26px 30px" class="skills-row">
+<div><p class="lbl" style="margin: 0 0 6px; color: var(--accent)">Skills &amp; tools</p><h3 class="disp" style="margin: 0; font-size: 24px; line-height: 1.1">What I bring to the team</h3></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span class="chip tool-chip">Figma</span><span class="chip tool-chip">Framer</span><span class="chip tool-chip">Photoshop</span><span class="chip tool-chip">Sketch</span><span class="chip tool-chip">Claude (AI)</span><span aria-hidden="true" style="width: 1px; height: 30px; background: var(--line); margin: 0 6px"></span><span class="chip">Product design</span><span class="chip">UX research</span><span class="chip">User flows</span><span class="chip">Wireframing</span><span class="chip">Prototyping</span><span class="chip">Design systems</span><span class="chip">SaaS dashboards</span><span class="chip">Mobile apps</span><span class="chip">Responsive web</span><span class="chip">Visual QA</span></div>
 </div>
 </div>
 </section>
@@ -715,11 +751,11 @@ textarea.inp{min-height:130px;resize:vertical;line-height:1.5}
 <button type="button" class="tbtn" role="tab" aria-selected="false"><span class="av" style="background: var(--lime); color: var(--dark)">AK</span><span><span style="display: block; font-weight: 600">Asif Khan</span><span style="display: block; color: var(--muted); font-size: 14px; margin-top: 2px">CEO, Xstate</span></span><span class="tb" aria-hidden="true"></span></button>
 </div>
 </div>
-<div class="rv" style="--i: 1; position: relative; background: var(--surface); border-radius: 32px; padding: 48px; min-height: 420px">
-<svg aria-hidden="true" width="64" height="48" viewBox="0 0 64 48" fill="#1F5E45"><path d="M0 48V28C0 12 8 2 24 0l3 7C17 10 13 16 13 24h11v24zM36 48V28C36 12 44 2 60 0l3 7c-10 3-14 9-14 17h11v24z"></path></svg>
-<div style="position: relative; margin-top: 28px">
-<figure class="tq on" style="margin: 0"><blockquote class="disp" style="margin: 0; font-size: clamp(20px, 2vw, 26px); line-height: 1.42; font-weight: 500; letter-spacing: -0.02em">Working with Khurram has been an absolute pleasure. His passion, dedication, and strong understanding of design principles truly set him apart. He consistently delivers thoughtful, visually appealing designs and has made valuable contributions to several company projects. I highly recommend Khurram for his creativity, professionalism, and commitment to quality.</blockquote><figcaption style="margin-top: 28px; font-size: 15px"><strong>Zulal Ahmad</strong> <span style="color: var(--muted)">· Founder, Umda Design Agency</span></figcaption></figure>
-<figure class="tq" style="margin: 0"><blockquote class="disp" style="margin: 0; font-size: clamp(20px, 2vw, 26px); line-height: 1.42; font-weight: 500; letter-spacing: -0.02em">Khurram has an exceptional ability to transform concepts into captivating visuals. The quality of his work, combined with his impressive speed and efficiency, makes his services an outstanding value. He has become my go-to designer for all website design projects. From concept to execution, Khurram consistently delivers a seamless experience and creates visually stunning online presences.</blockquote><figcaption style="margin-top: 28px; font-size: 15px"><strong>Asif Khan</strong> <span style="color: var(--muted)">· CEO, Xstate</span></figcaption></figure>
+<div class="rv" style="--i: 1; position: relative; background: var(--surface); border-radius: 32px; padding: 40px">
+<svg aria-hidden="true" width="44" height="33" viewBox="0 0 64 48" fill="#1F5E45"><path d="M0 48V28C0 12 8 2 24 0l3 7C17 10 13 16 13 24h11v24zM36 48V28C36 12 44 2 60 0l3 7c-10 3-14 9-14 17h11v24z"></path></svg>
+<div style="position: relative; margin-top: 20px">
+<figure class="tq on" style="margin: 0"><blockquote class="disp" style="margin: 0; font-size: clamp(17px, 1.35vw, 19px); line-height: 1.6; font-weight: 500; letter-spacing: -0.01em">Working with Khurram has been an absolute pleasure. His passion, dedication, and strong understanding of design principles truly set him apart. He consistently delivers thoughtful, visually appealing designs and has made valuable contributions to several company projects. I highly recommend Khurram for his creativity, professionalism, and commitment to quality.</blockquote><figcaption style="margin-top: 20px; font-size: 15px"><strong>Zulal Ahmad</strong> <span style="color: var(--muted)">· Founder, Umda Design Agency</span></figcaption></figure>
+<figure class="tq" style="margin: 0"><blockquote class="disp" style="margin: 0; font-size: clamp(17px, 1.35vw, 19px); line-height: 1.6; font-weight: 500; letter-spacing: -0.01em">Khurram has an exceptional ability to transform concepts into captivating visuals. The quality of his work, combined with his impressive speed and efficiency, makes his services an outstanding value. He has become my go-to designer for all website design projects. From concept to execution, Khurram consistently delivers a seamless experience and creates visually stunning online presences.</blockquote><figcaption style="margin-top: 20px; font-size: 15px"><strong>Asif Khan</strong> <span style="color: var(--muted)">· CEO, Xstate</span></figcaption></figure>
 </div>
 </div>
 </div>
@@ -774,10 +810,12 @@ textarea.inp{min-height:130px;resize:vertical;line-height:1.5}
 </form>
 </div>
 <div class="form-done" role="status" style="flex-direction: column; align-items: flex-start; gap: 16px; padding: 20px 0 8px">
-<span style="display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--lime); color: var(--dark)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"></path></svg></span>
-<h2 class="disp" style="margin: 0; font-size: 36px; line-height: 1">Message sent.</h2>
-<p style="margin: 0; color: var(--ink2); line-height: 1.6">Thanks for reaching out — I’ll get back to you at the email you shared.</p>
-<button type="button" class="btn btn-ghost" data-reset="" style="min-height: 46px">Send another</button>
+<svg class="plane" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13"></path><path d="M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+<div class="okmark" aria-hidden="true"><span class="burst"><i style="--a: 0deg"></i><i style="--a: 30deg"></i><i style="--a: 60deg"></i><i style="--a: 90deg"></i><i style="--a: 120deg"></i><i style="--a: 150deg"></i><i style="--a: 180deg"></i><i style="--a: 210deg"></i><i style="--a: 240deg"></i><i style="--a: 270deg"></i><i style="--a: 300deg"></i><i style="--a: 330deg"></i></span>
+<svg viewBox="0 0 84 84"><circle class="fillc" cx="42" cy="42" r="34" fill="#C9F27A"></circle><circle class="ring" cx="42" cy="42" r="40" fill="none" stroke="#1F5E45" stroke-width="3"></circle><path class="tick" d="M27 43l10 10 20-21" fill="none" stroke="#0F1D17" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+<h2 class="disp done-t" style="margin: 0; font-size: 36px; line-height: 1">Message sent.</h2>
+<p class="done-p" style="margin: 0; color: var(--ink2); line-height: 1.6">Thanks for reaching out — I’ll get back to you at the email you shared.</p>
+<span class="done-b"><button type="button" class="btn btn-ghost" data-reset="" style="min-height: 46px">Send another</button></span>
 </div>
 </div>
 </div>
@@ -848,8 +886,8 @@ function initFx(root) {
     doc.addEventListener('pointermove', function (e) { tx = e.clientX; ty = e.clientY; cur.style.transform = 'translate(' + tx + 'px,' + ty + 'px)'; });
     (function loop() { rx += (tx - rx) * 0.18; ry += (ty - ry) * 0.18; ring.style.transform = 'translate(' + rx.toFixed(1) + 'px,' + ry.toFixed(1) + 'px)'; win.requestAnimationFrame(loop); })();
     root.addEventListener('pointerover', function (e) {
-      var t = e.target.closest ? e.target.closest('a, button, .tilt, .shot, input, textarea, label') : null;
-      var view = !!(t && (t.classList.contains('tilt') || t.classList.contains('shot') || (t.closest && t.closest('.tilt'))));
+      var t = e.target.closest ? e.target.closest('a, button, .tilt, .shot, .pimg, input, textarea, label') : null;
+      var view = !!(e.target.closest && (e.target.closest('.tilt') || e.target.closest('.pcard .pimg')));
       ring.classList.toggle('big', !!t && !view);
       ring.classList.toggle('view', view);
     });
@@ -903,6 +941,8 @@ function initFx(root) {
         wrapF.classList.remove('sending'); btn.disabled = false; if (lab) lab.textContent = 'Send message';
         if (good) { wrapF.classList.add('sent'); form.reset(); } else { wrapF.classList.add('failed'); }
       };
+      var doneOnce = false; var fin = finish; finish = function (g) { if (doneOnce) return; doneOnce = true; fin(g); };
+      setTimeout(function () { finish(false); }, 15000);
       try {
         win.fetch('https://formsubmit.co/ajax/designbykhurram@gmail.com', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) })
           .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
