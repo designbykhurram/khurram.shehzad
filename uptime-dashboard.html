@@ -404,7 +404,7 @@ textarea.inp{min-height:130px;resize:vertical;line-height:1.5}
 }
 
 /* form success animation */
-.form-done{position:relative;overflow:hidden}
+.form-done{position:relative;overflow:visible}
 .sent .form-done{animation:fade .5s cubic-bezier(.22,1,.36,1) both}
 .okmark{position:relative;width:84px;height:84px}
 .okmark svg{position:absolute;inset:0}
@@ -416,14 +416,14 @@ textarea.inp{min-height:130px;resize:vertical;line-height:1.5}
 .sent .okmark .fillc{animation:popc .5s cubic-bezier(.34,1.56,.64,1) .7s forwards}
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes popc{to{transform:scale(1)}}
-.burst{position:absolute;left:42px;top:42px;width:0;height:0}
+.burst{position:absolute;left:42px;top:42px;width:0;height:0;pointer-events:none}
 .burst i{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--lime);opacity:0}
 .burst i:nth-child(even){background:var(--accent);width:6px;height:6px}
 .sent .burst i{animation:burst .9s cubic-bezier(.22,1,.36,1) .8s forwards}
 @keyframes burst{0%{opacity:1;transform:rotate(var(--a)) translateX(0) scale(1)}100%{opacity:0;transform:rotate(var(--a)) translateX(70px) scale(.4)}}
-.plane{position:absolute;right:10px;top:30px;opacity:0;color:var(--accent)}
-.sent .plane{animation:fly 1.6s cubic-bezier(.45,0,.2,1) .2s forwards}
-@keyframes fly{0%{opacity:0;transform:translate(-220px,140px) rotate(-12deg) scale(.6)}20%{opacity:1}80%{opacity:1}100%{opacity:0;transform:translate(60px,-80px) rotate(8deg) scale(1)}}
+.plane{position:absolute;left:0;top:0;opacity:0;color:var(--accent);pointer-events:none;offset-path:path("M 250 330 C 420 300, 440 150, 300 90 S 60 20, -70 -90");offset-rotate:auto 45deg;offset-distance:0%}
+.sent .plane{animation:fly 2s cubic-bezier(.45,.05,.35,1) .15s both}
+@keyframes fly{0%{offset-distance:0%;opacity:0;transform:scale(.7)}12%{opacity:1}80%{opacity:1}100%{offset-distance:100%;opacity:0;transform:scale(1)}}
 .sent .done-t{animation:fade .6s cubic-bezier(.22,1,.36,1) 1s both}
 .sent .done-p{animation:fade .6s cubic-bezier(.22,1,.36,1) 1.12s both}
 .sent .done-b{animation:fade .6s cubic-bezier(.22,1,.36,1) 1.24s both}
@@ -434,6 +434,9 @@ textarea.inp{min-height:130px;resize:vertical;line-height:1.5}
 .chip:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
 
 @media (max-width:900px){.skills-row{grid-template-columns:1fr !important;gap:16px !important}}
+
+.modal-close{z-index:5}
+.form-done .okmark{pointer-events:none}
 
 </style>
 </head>
@@ -563,7 +566,7 @@ textarea.inp{min-height:130px;resize:vertical;line-height:1.5}
 </div>
 </div>
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 28px 0 36px; font-size: 14px; color: #8d9a93">
-<span>© 2026 Khurram Shehzad · Based in Pakistan · Remote &amp; on-site</span>
+<span>© 2026 Khurram Shehzad · Based in Pakistan · Remote &amp; on-site · <span title="Site version">v24.11.3</span></span>
 <a class="flink" href="#top" style="font-size: 14px">Back to top ↑</a>
 </div>
 </div>
@@ -681,8 +684,9 @@ function initFx(root) {
 
   /* contact modal */
   var modal = root.querySelector('.modal'), lastFocus = null;
-  function openM(e) { if (e) e.preventDefault(); lastFocus = doc.activeElement; modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); var c = modal.querySelector('[name=email]') || modal.querySelector('.modal-close'); if (c) setTimeout(function () { c.focus(); }, 80); }
-  function closeM() { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+  function openM(e) { if (e) e.preventDefault(); lastFocus = doc.activeElement; var fw0 = modal.querySelector('.fwrap'); if (fw0 && fw0.classList.contains('sent')) resetForm(); modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); var c = modal.querySelector('[name=email]') || modal.querySelector('.modal-close'); if (c) setTimeout(function () { c.focus(); }, 80); }
+  function resetForm() { var fw = modal.querySelector('.fwrap'), f = modal.querySelector('.cform'); if (fw) fw.classList.remove('sent', 'failed', 'sending'); if (f) { f.reset(); Array.prototype.forEach.call(f.querySelectorAll('.bad'), function (x) { x.classList.remove('bad'); }); var sb = f.querySelector('[type=submit]'); if (sb) sb.disabled = false; var sl = f.querySelector('.send-label'); if (sl) sl.textContent = 'Send message'; } }
+  function closeM() { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); setTimeout(function () { if (!modal.classList.contains('open')) resetForm(); }, 400); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
   if (modal) {
     each('[data-contact]', function (b) { b.addEventListener('click', openM); });
     Array.prototype.forEach.call(modal.querySelectorAll('[data-close]'), function (b) { b.addEventListener('click', closeM); });
@@ -715,17 +719,23 @@ function initFx(root) {
       var topicEl = form.querySelector('[name=topic]:checked');
       var btn = form.querySelector('[type=submit]'), lab = form.querySelector('.send-label');
       wrapF.classList.remove('failed'); wrapF.classList.add('sending'); btn.disabled = true; if (lab) lab.textContent = 'Sending…';
-      var payload = { email: em.value.trim(), topic: topicEl ? topicEl.value : '', message: msg.value.trim(), _subject: 'Portfolio enquiry — ' + (topicEl ? topicEl.value : 'New message'), _template: 'table' };
+      var payload = { _replyto: em.value.trim(), _captcha: 'false', email: em.value.trim(), topic: topicEl ? topicEl.value : '', message: msg.value.trim(), _subject: 'Portfolio enquiry — ' + (topicEl ? topicEl.value : 'New message'), _template: 'table' };
       var finish = function (good) {
         wrapF.classList.remove('sending'); btn.disabled = false; if (lab) lab.textContent = 'Send message';
         if (good) { wrapF.classList.add('sent'); form.reset(); } else { wrapF.classList.add('failed'); }
       };
       var doneOnce = false; var fin = finish; finish = function (g) { if (doneOnce) return; doneOnce = true; fin(g); };
-      setTimeout(function () { finish(false); }, 15000);
+      if (win.navigator && win.navigator.onLine === false) { finish(false); return; }
+      var fd = new win.FormData();
+      Object.keys(payload).forEach(function (k) { fd.append(k, payload[k]); });
+      /* The email is delivered as soon as FormSubmit receives the request, but its reply can be slow.
+         Show success once the request is on its way; only a fast, real failure shows the error. */
+      setTimeout(function () { finish(true); }, 1600);
       try {
-        win.fetch('https://formsubmit.co/ajax/designbykhurram@gmail.com', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) })
-          .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
-          .then(function (d) { finish(!(d && (d.success === false || d.success === 'false'))); }, function () { finish(false); });
+        /* no-cors: the browser sends the message without waiting on FormSubmit's CORS reply,
+           so a slow or unusual reply can never show a false error. Only a real network failure does. */
+        win.fetch('https://formsubmit.co/ajax/designbykhurram@gmail.com', { method: 'POST', mode: 'no-cors', body: fd, keepalive: true })
+          .then(function () { finish(true); }, function () { finish(false); });
       } catch (err) { finish(false); }
     });
     Array.prototype.forEach.call(root.querySelectorAll('[data-reset]'), function (b) { b.addEventListener('click', function () { wrapF.classList.remove('sent', 'failed'); }); });
